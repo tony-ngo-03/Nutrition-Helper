@@ -34,12 +34,24 @@ router.get("/get-id/:id", async (req, res) => {
 router.get("/get-date/:date", async (req, res) => {
     try{
         const {date} = req.params;
-        const response = await foodItem.find({createdDate: date});
+        const response = await foodItem.find({date: date});
         if (!response){
             res.status(404).json({message: "not found"});
             return;
         }
         res.status(200).json(response);
+    }
+    catch(error){
+        res.status(400).json({message: `${error}`});
+    }
+})
+
+router.put("/add-food/", async (req, res) => {
+    try{
+        const {name, quantity, calories, date} = req.body;
+        const newItem = new foodItem({name: name, quantity: quantity, calories: calories, date: date});
+        await newItem.save();
+        res.status(200).json(newItem);
     }
     catch(error){
         res.status(400).json({message: `${error}`});

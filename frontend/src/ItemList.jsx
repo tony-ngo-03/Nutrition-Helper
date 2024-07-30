@@ -10,7 +10,7 @@ function ItemList({foodList}){
 
     return (
         <div>
-            {foodList.length === 0 ? (<p>None Found</p>) : (
+            {foodList.length === 0 ? (<p>None Found...</p>) : (
                 <ul>
                     {foodList.map( (element, index) => <Item name={element.name} calories={element.calories} key={index}/> )}
                 </ul>
