@@ -47,7 +47,7 @@ router.get("/get-date/:date", async (req, res) => {
 })
 
 // POST NEW DAILY LOG 
-router.post("/post-date", async (req, res) => {
+router.post("/add-date", async (req, res) => {
     try{
         const {date, caloriesWanted, food} = req.body; 
         const caloriesUsed = food.reduce((acc, curr) => acc + (curr.calories * curr.quantity), 0);

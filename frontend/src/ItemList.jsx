@@ -7,7 +7,6 @@ function Item ({key, name, calories}){
 }
 
 function ItemList({foodList}){
-
     return (
         <div>
             {foodList.length === 0 ? (<p>None Found...</p>) : (

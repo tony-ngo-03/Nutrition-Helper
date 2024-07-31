@@ -1,7 +1,7 @@
 import React from "react";
 
-
 function DateSelector({currentDate, handleUpdate}){
+    
     const changeDate = (offset) => {
         const newDate = new Date(currentDate);
         newDate.setDate(newDate.getDate() + offset);
