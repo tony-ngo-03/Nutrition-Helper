@@ -8,7 +8,7 @@ function NewFoodForm({onSubmit}){
     const submitForm = (event) => {
         event.preventDefault();
         if(foodCalories > 0){
-            onSubmit(foodName, foodCalories);
+            onSubmit(foodName, foodCalories, 1);
             setFoodName("");
             setFoodCalories(1);
         }

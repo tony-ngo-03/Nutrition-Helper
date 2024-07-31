@@ -34,10 +34,15 @@ function Day({currentDate}){
 
     const handleNewFoodSubmit = async (foodName, foodCalories, foodQuantity) => {
         try{
-            // const response = await axios.put("");
+            const newFoodList = [...foodItemList, {name: foodName, quantity: foodQuantity, calories: foodCalories}];
+            const response = await axios.put("http://localhost:5000/date/update-date", {date: currentDate, caloriesWanted: caloriesWanted, food: newFoodList});
+            if (response){
+                console.log("Successfully updated Date");
+                getDayInfo();
+            }
         }
         catch(error){
-
+            console.error(`Error when updating ${currentDate}: ${error}`);
         }
     }
 
