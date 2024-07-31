@@ -45,11 +45,25 @@ function Day({currentDate}){
             console.error(`Error when updating ${currentDate}: ${error}`);
         }
     }
+    
+    const handleNewCalorieWanted = async (newCaloriesWanted) => {
+        try{
+            setCaloriesWanted(newCaloriesWanted);
+            const response = await axios.put("http://localhost:5000/date/update-date", {date: currentDate, caloriesWanted: newCaloriesWanted, food: foodItemList});
+            if (response){
+                console.log("Successfully updated Date");
+                getDayInfo();
+            }
+        }
+        catch(error){
+            console.error(`Error when updating ${currentDate}: ${error}`);
+        }
+    }
 
     return (
         <>
         <NewFoodForm onSubmit={handleNewFoodSubmit}/>
-        <DailyCalorie caloriesConsumed={caloriesUsed}/>
+        <DailyCalorie caloriesWanted ={caloriesWanted} caloriesConsumed={caloriesUsed} onCalorieChange={handleNewCalorieWanted}/>
         <ItemList foodList={foodItemList} />
         
         </>

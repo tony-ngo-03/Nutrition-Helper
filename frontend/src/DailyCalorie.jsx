@@ -1,13 +1,18 @@
 import React, {useState} from "react";
 
-function DailyCalorie({caloriesConsumed}){
-    const [totalCalories, setTotalCalories] = useState(0);
-    const caloriesLeft = totalCalories - caloriesConsumed;
+function DailyCalorie({caloriesWanted, caloriesConsumed, onCalorieChange}){
+    const caloriesLeft = caloriesWanted - caloriesConsumed;
+
+    const updateCalorieWanted = (e) => {
+        onCalorieChange(Number(e.target.value));
+    }
+
+
     return (
         <>
             <form>
                 <label>Daily Calories Wanted:</label>
-                <input type="Number" min="1" onChange={(e) => setTotalCalories(Number(e.target.value))}></input>
+                <input type="Number" min="1" onChange={updateCalorieWanted} value={caloriesWanted}></input>
                 <label>Total Left: {caloriesLeft}</label>
             </form>
         </>
