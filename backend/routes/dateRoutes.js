@@ -46,14 +46,46 @@ router.get("/get-date/:date", async (req, res) => {
     }
 })
 
-// PUT NEW DAILY LOG 
-router.put("/put-date/", async (req, res) => {
+// POST NEW DAILY LOG 
+router.post("/post-date", async (req, res) => {
     try{
         const {date, caloriesWanted, food} = req.body; 
         const caloriesUsed = food.reduce((acc, curr) => acc + (curr.calories * curr.quantity), 0);
         let newDailyLog = new DailyLog({date: date, caloriesWanted: caloriesWanted, caloriesUsed: caloriesUsed, food: food});
         await newDailyLog.save();
         res.status(200).json("Added new Log");
+    }
+    catch(error){
+        res.status(400).json({message: `${error}`});
+    }
+})
+
+// UPDATE DAILY LOG
+router.put("/update-date", async (req, res) => {
+    try{
+        const {date, caloriesWanted, food} = req.body;
+        const caloriesUsed = food.reduce((acc, curr) => acc + (curr.calories * curr.quantity), 0);
+        const foundLog = await DailyLog.findOneAndUpdate({date: date}, {caloriesWanted: caloriesWanted, caloriesUsed: caloriesUsed, food: food});
+        if (!foundLog){
+            res.status(404).json(`Cannot find log of date ${date}`)
+            return;
+        }
+        res.status(200).json("Updated Log");
+    }
+    catch(error){
+        res.status(400).json({message: `${error}`});
+    }
+})
+
+router.delete("/delete-date/:date", async (req, res) => {
+    try{
+        const {date} = req.params;
+        const foundLog = await DailyLog.findOneAndDelete({date: date});
+        if (!foundLog){
+            res.status(404).json(`Cannot find log of date ${date}`);
+            return;
+        }
+        res.status(200).json("Deleted log");
     }
     catch(error){
         res.status(400).json({message: `${error}`});
