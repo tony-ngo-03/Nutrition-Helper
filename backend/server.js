@@ -2,8 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import foodItem from "./models/foodItemModel.js";
-import foodRoutes from "./routes/foodRoutes.js";
+import dateRoutes from "./routes/dateRoutes.js";
 const corsOptions= {
     origin: "http://localhost:5173"
 }
@@ -28,4 +27,4 @@ mongoose
 })
 .catch((error) => {console.log(`Error: ${error}`)});
 
-app.use('/food', foodRoutes);
+app.use('/date', dateRoutes);
