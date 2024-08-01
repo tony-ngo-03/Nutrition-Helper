@@ -32,9 +32,9 @@ function Day({currentDate}){
         getDayInfo();
     }, [currentDate]);
 
-    const handleNewFoodSubmit = async (foodName, foodCalories, foodQuantity) => {
+    const handleNewFoodSubmit = async (foodName, foodCalories, foodQuantity, foodProtein, foodCarbs, foodFats) => {
         try{
-            const newFoodList = [...foodItemList, {name: foodName, quantity: foodQuantity, calories: foodCalories}];
+            const newFoodList = [...foodItemList, {name: foodName, quantity: foodQuantity, calories: foodCalories, protein: foodProtein, carbs: foodCarbs, fats: foodFats}];
             const response = await axios.put("http://localhost:5000/date/update-date", {date: currentDate, caloriesWanted: caloriesWanted, food: newFoodList});
             if (response){
                 console.log("Successfully updated Date");
@@ -80,7 +80,6 @@ function Day({currentDate}){
         <NewFoodForm onSubmit={handleNewFoodSubmit}/>
         <DailyCalorie caloriesWanted ={caloriesWanted} caloriesConsumed={caloriesUsed} onCalorieChange={handleNewCalorieWanted}/>
         <ItemList foodList={foodItemList} deleteFromList={handleDeletion}/>
-        
         </>
     );
 }

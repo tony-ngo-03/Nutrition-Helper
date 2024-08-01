@@ -1,11 +1,17 @@
 import React from "react";
 
-function Item ({index, name, calories, handleDelete}){
+function Item ({index, foodItem, handleDelete}){
 
     
 
     return (
-        <li key={index}>{name} - {calories} <button onClick={() => handleDelete({index})}>Remove</button></li>
+        <li key={index}>{foodItem.name} - {foodItem.calories}cal(s) <button onClick={() => handleDelete({index})}>Remove</button>
+            <ul>
+                <li>P:{foodItem.protein}</li>
+                <li>C:{foodItem.carbs}</li>
+                <li>F:{foodItem.fats}</li>
+            </ul>
+        </li>
     );
 }
 
@@ -14,7 +20,7 @@ function ItemList({foodList, deleteFromList}){
 
     const handleDelete = (index) => {
         deleteFromList(foodList[index.index]);
-        
+
     }
 
 
@@ -22,7 +28,7 @@ function ItemList({foodList, deleteFromList}){
         <div>
             {foodList.length === 0 ? (<p>None Found...</p>) : (
                 <ul>
-                    {foodList.map( (element, index) => <Item name={element.name} calories={element.calories} key={index} index={index} handleDelete={handleDelete}/> )}
+                    {foodList.map( (element, index) => <Item foodItem={element} key={index} index={index} handleDelete={handleDelete}/> )}
                 </ul>
             )}
         </div>
