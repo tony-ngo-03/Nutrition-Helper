@@ -2,9 +2,10 @@ import React from "react";
 
 function DateSelector({currentDate, handleUpdate}){
     
-    const changeDate = (offset) => {
+    // changes date based on offset of days
+    const changeDate = (dayOffset) => {
         const newDate = new Date(currentDate);
-        newDate.setDate(newDate.getDate() + offset);
+        newDate.setDate(newDate.getDate() + dayOffset);
         handleUpdate(newDate);
     }
 

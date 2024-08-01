@@ -7,7 +7,7 @@ function NewFoodForm({onSubmit}){
     const [foodProtein, setFoodProtein] = useState(0);
     const [foodCarbs, setFoodCarbs] = useState(0);
     const [foodFats, setFoodFats] = useState(0);
-
+    
     const submitForm = (event) => {
         event.preventDefault();
         if(foodCalories > 0 && foodName.length > 0){

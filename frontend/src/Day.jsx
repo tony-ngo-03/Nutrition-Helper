@@ -8,16 +8,16 @@ function Day({currentDate}){
 
     const [caloriesWanted, setCaloriesWanted] = useState(0);
     const [caloriesUsed, setCaloriesUsed] = useState(0);
-
     const [foodItemList, setFoodItemList] = useState([]);
 
+    // updates foodItemList
     const getDayInfo = async () => {
         try{
             let response = await axios.get(`http://localhost:5000/date/get-date/${currentDate}`);
-            if (response.data.length === 0){ // empty!
+            if (response.data.length === 0){ // if we do not have one for this day, then ask to create one
                 await axios.post("http://localhost:5000/date/add-date", {date: currentDate, caloriesWanted: 0, food: []});
+                response = await axios.get(`http://localhost:5000/date/get-date/${currentDate}`);
             }
-            response = await axios.get(`http://localhost:5000/date/get-date/${currentDate}`);
             setFoodItemList(response.data[0].food);
             setCaloriesWanted(response.data[0].caloriesWanted);
             setCaloriesUsed(response.data[0].caloriesUsed);
@@ -28,10 +28,12 @@ function Day({currentDate}){
         }
     }
 
+    // if currentDate changes then we need to reload the dayInfo
     useEffect(() => {
         getDayInfo();
     }, [currentDate]);
 
+    // submit a new food item to the day
     const handleNewFoodSubmit = async (foodName, foodCalories, foodQuantity, foodProtein, foodCarbs, foodFats) => {
         try{
             const newFoodList = [...foodItemList, {name: foodName, quantity: foodQuantity, calories: foodCalories, protein: foodProtein, carbs: foodCarbs, fats: foodFats}];
@@ -44,8 +46,8 @@ function Day({currentDate}){
         catch(error){
             console.error(`Error when updating ${currentDate}: ${error}`);
         }
-    }
-    
+    }   
+    // submit a new calorie wanted
     const handleNewCalorieWanted = async (newCaloriesWanted) => {
         try{
             setCaloriesWanted(newCaloriesWanted);
@@ -60,6 +62,7 @@ function Day({currentDate}){
         }
     }
 
+    // delete a food item from the food list
     const handleDeletion = async (foodItem) => {
         try{
             const newFoodItemList = foodItemList.filter(item => item !== foodItem);
