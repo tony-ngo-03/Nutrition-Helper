@@ -60,11 +60,26 @@ function Day({currentDate}){
         }
     }
 
+    const handleDeletion = async (foodItem) => {
+        try{
+            const newFoodItemList = foodItemList.filter(item => item !== foodItem);
+            setFoodItemList(newFoodItemList);
+            const response = await axios.put("http://localhost:5000/date/update-date", {date: currentDate, caloriesWanted: caloriesWanted, food: newFoodItemList});
+            if (response){
+                console.log("Sucessfully updated Date");
+                getDayInfo();
+            }
+        }
+        catch(error){
+            console.error(`Error when deleting ${fooditem}: ${error}`);
+        }
+    }
+
     return (
         <>
         <NewFoodForm onSubmit={handleNewFoodSubmit}/>
         <DailyCalorie caloriesWanted ={caloriesWanted} caloriesConsumed={caloriesUsed} onCalorieChange={handleNewCalorieWanted}/>
-        <ItemList foodList={foodItemList} />
+        <ItemList foodList={foodItemList} deleteFromList={handleDeletion}/>
         
         </>
     );
